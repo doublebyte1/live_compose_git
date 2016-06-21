@@ -1,0 +1,60 @@
+#TODO: export $gitlab_user, $gitlab_pass, $GEOCAT_services_IP, $NRSYSMOND_license_key, $sftp_user, $sftp_pass
+
+version: '2'
+services:
+
+    gn:
+        build: 
+            context: https://$gitlab_user:$gitlab_pass@eos.geocat.net/gitlab/joana.simoes/live_compose.git#master:live_gn
+            args:
+              SFTP_user: $sftp_user
+              SFTP_pass: $sftp_pass
+              APP_file: geonetworkv304.war
+              GEOCAT_services_IP: $GEOCAT_services_IP
+        ports: 
+            - "8441:8443"
+            - "8081:8080"
+        links:
+            - db
+        volumes_from:
+            - data
+
+    gs:
+        build:
+            context: https://$gitlab_user:$gitlab_pass@eos.geocat.net/gitlab/joana.simoes/live_compose.git#master:live_gs
+            args:
+              SFTP_user: $sftp_user
+              SFTP_pass: $sftp_pass
+              APP_file: geoserver.zip
+              GEOCAT_services_IP: $GEOCAT_services_IP
+        ports:
+            - "8442:8443"
+            - "8082:8080"
+        links:
+            - db
+        volumes_from:
+            - data      
+
+    db:
+        build: https://$gitlab_user:$gitlab_pass@eos.geocat.net/gitlab/joana.simoes/live_compose.git#master:live_db
+        volumes_from:
+            - data   
+
+    data:
+        build: https://$gitlab_user:$gitlab_pass@eos.geocat.net/gitlab/joana.simoes/live_compose.git#master:live_data
+        ports:
+            - "9102:9102"
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+
+    newrelic_sysmond:
+        image: doublebyte/newrelic_sysmond
+        privileged: true
+        volumes:
+         - "/var/run/docker.sock:/var/run/docker.sock"
+         - "/dev:/dev"
+         - "/sys:/sys"
+        environment:
+         - NRSYSMOND_license_key
+        pid: host
+        network_mode: host
