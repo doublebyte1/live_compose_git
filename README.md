@@ -65,14 +65,6 @@ After creating the containers, you can start the system at any time with:
 * sftp_pass: password of the SFTP server
 * RSYSMOND_license_key: NewRelic License key.
 
-Data Container
--------------
-As mentioned before, the _data volumes_ are dettached from the containers and mounted in a data container. This allows the micro-services containers to be stopped, restarted or killed, without any loss of data.
-The volumes being exported include the data directories from GeoNetwork and GeoServer, as well as their PostgreSQL databases and the DB logs.
-
-The data container also has an _house-keeping_ role, being responsable for the backups. For that purpose, it features a backup client (bacula-client), as well as a database client (psql), and it includes a number of backup scripts. 
-This container also needs to interact with the docker daemon (in order to stop and start services during backups), and therefore it mounts the docker socket on the host.
-
 Building Images with Different GeoNetwork and Geoserver files
 -------------------------------------------------------------
 
