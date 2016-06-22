@@ -13,11 +13,11 @@ GENERAL INFORMATION
 ============
 This is a MVP, that instantiates an SDI through a set of micro-services. The shipped services are:
 
-* Tomcatv7/SSL support
-* GNv3.0.4
-* Geoserverv2.8.2
-* PostgreSQLv9.3
-* PostGISv2.1
+* Tomcat/SSL support
+* GN
+* Geoserver
+* PostgreSQL
+* PostGIS
 * Newrelic-sysmond (monitoring)
 
 While storage is persisted in **volumes** associated to a data-only container, the services are *disposable*, in the sense that it is relatively *cheap* to kill them and create them again.
@@ -87,18 +87,6 @@ If you are running docker on Linux, just replace [replace_me] by _localhost_ (_e
 Since the certificates are bounded to geocat.net, you may want to avoid SSL errors by adding an entry on your hosts file (e.g.: /etc/hosts on Linux). Something like this would work:
 
 [replace_me] sushi.geocat.net
-
-If you want to use the backup client for jobs, you need to register the host on a bacula-server. We currently have some backup jobs configured on bacula-dir, running on helios.
-You can read more about configuring and using this bacula-server instance, on this link:
-
-https://eos.geocat.net/redmine/projects/live/wiki/Dockerized_Live#Backups
-
-If you want to monitor the system, you will need a NewRelic key. Please sign up for a free account, to obtain a [license key](https://newrelic.com/signup). The docker images read the license key from an environmental variable, _NRSYSMOND_license_key_. To replace this key, please edit _common.env_, on the root of this folder, and replace the key value for your key.
-After this, you will need to re-create the containers. Please read on, in order to to that.
-
-You can read more about the monitoring system in place, on this link:
-
-https://eos.geocat.net/redmine/projects/live/wiki/Dockerized_Live#Monitoring
 
 Recreating Containers
 =====================
