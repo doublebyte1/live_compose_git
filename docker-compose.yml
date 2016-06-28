@@ -5,7 +5,7 @@ services:
 
     gn:
         build: 
-            context: https://$gitlab_user:$gitlab_pass@eos.geocat.net/gitlab/joana.simoes/live_compose.git#master:live_gn
+            context: https://$gitlab_user:$gitlab_pass@eos.geocat.net/gitlab/live/live_compose.git#master:live_gn
             args:
               SFTP_user: $sftp_user
               SFTP_pass: $sftp_pass
@@ -21,7 +21,7 @@ services:
 
     gs:
         build:
-            context: https://$gitlab_user:$gitlab_pass@eos.geocat.net/gitlab/joana.simoes/live_compose.git#master:live_gs
+            context: https://$gitlab_user:$gitlab_pass@eos.geocat.net/gitlab/live/live_compose.git#master:live_gs
             args:
               SFTP_user: $sftp_user
               SFTP_pass: $sftp_pass
@@ -36,12 +36,12 @@ services:
             - data      
 
     db:
-        build: https://$gitlab_user:$gitlab_pass@eos.geocat.net/gitlab/joana.simoes/live_compose.git#master:live_db
+        build: https://$gitlab_user:$gitlab_pass@eos.geocat.net/gitlab/live/live_compose.git#master:live_db
         volumes_from:
             - data   
 
     data:
-        build: https://$gitlab_user:$gitlab_pass@eos.geocat.net/gitlab/joana.simoes/live_compose.git#master:live_data
+        build: https://$gitlab_user:$gitlab_pass@eos.geocat.net/gitlab/live/live_compose.git#master:live_data
         ports:
             - "9102:9102"
         volumes:
